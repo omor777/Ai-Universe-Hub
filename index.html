@@ -47,6 +47,8 @@
             AI Universe Hub
           </h2>
           <button
+            id="sort-by-data"
+            onclick="sortAiDataBtnClick()"
             class="btn text-white text-xl font-semibold rounded-md bg-[#EB5757] hover:bg-[#EB5757]"
           >
             Sort By Date
@@ -57,7 +59,9 @@
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
         ></div>
         <div class="text-center mt-12">
-          <button onclick="showAllData()"
+          <button
+            id="see-more-btn"
+            onclick="showAllData()"
             class="btn text-white text-xl font-semibold rounded-md bg-[#EB5757] hover:bg-[#EB5757]"
           >
             See More

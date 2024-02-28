@@ -1,11 +1,24 @@
-const loadAiData = async (isShowAll) => {
+const loadAiData = async (isShowAll, isSort) => {
+  console.log(isSort);
   const res = await fetch(`https://openapi.programming-hero.com/api/ai/tools`);
   const data = await res.json();
   const aiData = data.data.tools;
-  displayAiInfo(aiData, isShowAll);
+  displayAiInfo(aiData, isShowAll, isSort);
 };
 
-const displayAiInfo = (aiData, isShowAll) => {
+/**
+ *
+ * @param {Array} aiData
+ */
+const sortData = (aiData) => {
+  aiData.sort((a, b) => {
+    const item1 = new Date(a?.published_in);
+    const item2 = new Date(b?.published_in);
+    return item2 - item1;
+  });
+};
+
+const displayAiInfo = (aiData, isShowAll, isSort) => {
   const aiInfoContainer = document.getElementById("ai-info-container");
 
   aiInfoContainer.innerHTML = "";
@@ -13,6 +26,14 @@ const displayAiInfo = (aiData, isShowAll) => {
   //show first 9 data initially
   if (!isShowAll) {
     aiData = aiData.slice(0, 9);
+  }
+
+  //sort data by button click
+  if (isSort) {
+    // aiData.sort((a, b) => {
+    //   return new Date(a.published_in) - new Date(b.published_in);
+    // });
+    sortData(aiData);
   }
 
   aiData.forEach((data) => {
@@ -52,7 +73,12 @@ const displayAiInfo = (aiData, isShowAll) => {
 };
 
 const showAllData = () => {
-  loadAiData(true);
+  loadAiData(true, null);
+  document.getElementById("see-more-btn").classList.add("hidden");
+};
+
+const sortAiDataBtnClick = () => {
+  loadAiData(null, true);
 };
 
 loadAiData();
