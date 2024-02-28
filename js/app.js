@@ -1,16 +1,23 @@
-const loadAiData = async () => {
+const loadAiData = async (isShowAll) => {
   const res = await fetch(`https://openapi.programming-hero.com/api/ai/tools`);
   const data = await res.json();
   const aiData = data.data.tools;
-  displayAiInfo(aiData);
+  displayAiInfo(aiData, isShowAll);
 };
 
-const displayAiInfo = (aiData) => {
+const displayAiInfo = (aiData, isShowAll) => {
   const aiInfoContainer = document.getElementById("ai-info-container");
+
+  aiInfoContainer.innerHTML = "";
+
+  //show first 9 data initially
+  if (!isShowAll) {
+    aiData = aiData.slice(0, 9);
+  }
+
   aiData.forEach((data) => {
-    console.log(data);
     const div = document.createElement("div");
-    div.classList = ``;
+
     div.innerHTML = `
     <div class="rounded-2xl border border-[#1111111A] bg-[#FFFFFF] p-6 ">
     <figure class="">
@@ -42,6 +49,10 @@ const displayAiInfo = (aiData) => {
     `;
     aiInfoContainer.appendChild(div);
   });
+};
+
+const showAllData = () => {
+  loadAiData(true);
 };
 
 loadAiData();
